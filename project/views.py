@@ -55,6 +55,7 @@ def closed_tasks():
 ########################
 
 @app.route('/logout/')
+@login_required
 def logout():
     session.pop('logged_in', None)
     session.pop('user_id', None)
@@ -113,7 +114,7 @@ def new_task():
         form=form,
         error=error,
         open_tasks=open_tasks(),
-        closed_tasks=closed_tasks89
+        closed_tasks=closed_tasks()
     )
 
 # Mark tasks as complete
@@ -127,7 +128,7 @@ def complete(task_id):
     return redirect(url_for('tasks'))
 
 # Delete Tasks
-@app.route('/delete.<int:task_id>/')
+@app.route('/delete/<int:task_id>/')
 @login_required
 def delete_entry(task_id):
     new_id = task_id
